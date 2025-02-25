@@ -292,7 +292,7 @@ function App() {
       <div className="relative h-screen">
         <div className="absolute inset-0">
           <img
-            src="src/images/large_ww2122215_748616.jpg"
+            src="./src/images/large_ww2122215_748616.jpg"
             alt="Coastal Community"
             className="w-full h-full object-cover"
           />
