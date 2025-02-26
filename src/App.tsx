@@ -56,7 +56,7 @@ function App() {
       credits: 750,
       price: 25,
       verified: true,
-      image: 'https://images.app.goo.gl/ZfA1qqdLkm6ctTwe6'
+      image: 'https://images.squarespace-cdn.com/content/v1/5cd121afd7456285f1c0a9f9/1579965571431-QMQMG4MQLC90DLHXFDF1/LR_Ali+Seagrass+Research.jpg'
     },
     {
       id: '3',
