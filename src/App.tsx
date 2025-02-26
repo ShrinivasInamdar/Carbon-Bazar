@@ -56,7 +56,7 @@ function App() {
       credits: 750,
       price: 25,
       verified: true,
-      image: 'https://images.squarespace-cdn.com/content/v1/5cd121afd7456285f1c0a9f9/1579965571431-QMQMG4MQLC90DLHXFDF1/LR_Ali+Seagrass+Research.jpg'
+      image: 'https://drive.google.com/file/d/1-xOk50230HOmMJ9IuB7hJnH1cGGNZKSO/view?usp=sharing'
     },
     {
       id: '3',
@@ -65,7 +65,7 @@ function App() {
       credits: 500,
       price: 22,
       verified: true,
-      image: 'https://images.app.goo.gl/GTqiuJGPbcSAzjQ77'
+      image: 'https://drive.google.com/file/d/18djEOeZhpWTH2MkWbE3oE0kfrtP9e8Ft/view?usp=share_link'
     },
     {
       id: '4',
@@ -74,7 +74,7 @@ function App() {
       credits: 800,
       price: 24,
       verified: true,
-      image: 'https://images.app.goo.gl/hCUwNgUzNEuetj3w8'
+      image: 'https://drive.google.com/file/d/1l4O3vtuTeKC8TsCo_RnAJgydUQjL9TtN/view?usp=share_link'
     }
   ];
 
