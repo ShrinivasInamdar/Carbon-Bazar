@@ -56,7 +56,7 @@ function App() {
       credits: 750,
       price: 25,
       verified: true,
-      image: './src/images/LR_Ali+Seagrass+Research.jpg'
+      image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.maldivesunderwaterinitiative.com%2Fseagrass-conservation&psig=AOvVaw2zLLF8kN5OLm6A_T6LxJ4U&ust=1740650595548000&source=images&cd=vfe&opi=89978449&ved=0CBYQjRxqFwoTCPC0xPWK4YsDFQAAAAAdAAAAABAE'
     },
     {
       id: '3',
@@ -65,7 +65,7 @@ function App() {
       credits: 500,
       price: 22,
       verified: true,
-      image: './src/images/DSC0034-768x511.jpg'
+      image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fscistarter.org%2Fsalt-marsh-restoration-and-citizen-science-in-char&psig=AOvVaw2ix2j7y2CFlh1PSwtt1ZMN&ust=1740650680932000&source=images&cd=vfe&opi=89978449&ved=0CBYQjRxqFwoTCMiKk56L4YsDFQAAAAAdAAAAABAE'
     },
     {
       id: '4',
@@ -74,7 +74,7 @@ function App() {
       credits: 800,
       price: 24,
       verified: true,
-      image: './src/images/green-trees-2666806.jpg'
+      image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fglobalwetlandsproject.org%2Fthere-are-cross-benefits-to-protecting-coastal-wetlands-in-the-wake-of-covid-19%2F&psig=AOvVaw0brw6qCudVqU_rXSAhgzi2&ust=1740650715898000&source=images&cd=vfe&opi=89978449&ved=0CBYQjRxqFwoTCJig2LCL4YsDFQAAAAAdAAAAABAE'
     }
   ];
 
@@ -292,7 +292,7 @@ function App() {
       <div className="relative h-screen">
         <div className="absolute inset-0">
           <img
-            src="./src/images/large_ww2122215_748616.jpg"
+            src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fbillionbricks.org%2Fblog%2Fhow-coastal-communities-adopt-a-sustainable-lifestyle%2F&psig=AOvVaw1R5r8L5de-rB1587mbzNXc&ust=1740650845484000&source=images&cd=vfe&opi=89978449&ved=0CBYQjRxqFwoTCPjp_uuL4YsDFQAAAAAdAAAAABAE"
             alt="Coastal Community"
             className="w-full h-full object-cover"
           />
