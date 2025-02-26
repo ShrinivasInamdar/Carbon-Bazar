@@ -47,7 +47,7 @@ function App() {
       credits: 1000,
       price: 28,
       verified: true,
-      image: './src/images/mangroves.jpg'
+      image: 'https://cdn.unenvironment.org/2024-05/20231207-UNEP_Decade%20on%20Ecosystem%20Restoration_Growing%20Mangroves_Sri%20Lanka_Todd%20Brown-66.jpg'
     },
     {
       id: '2',
