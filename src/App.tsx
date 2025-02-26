@@ -56,7 +56,7 @@ function App() {
       credits: 750,
       price: 25,
       verified: true,
-      image: 'https://drive.google.com/file/d/1-xOk50230HOmMJ9IuB7hJnH1cGGNZKSO/view?usp=sharing'
+      image: 'https://images.squarespace-cdn.com/content/v1/5cd121afd7456285f1c0a9f9/1579965571431-QMQMG4MQLC90DLHXFDF1/LR_Ali+Seagrass+Research.jpg'
     },
     {
       id: '3',
@@ -65,7 +65,7 @@ function App() {
       credits: 500,
       price: 22,
       verified: true,
-      image: 'https://drive.google.com/file/d/18djEOeZhpWTH2MkWbE3oE0kfrtP9e8Ft/view?usp=share_link'
+      image: 'https://www.essexwt.org.uk/sites/default/files/styles/scaled_default/public/2021-05/Installation%20of%20structures%20at%20Abbotts%20Hall%20Farm%20in%202018%20%20%281%29.jpg?itok=JsScTzdh'
     },
     {
       id: '4',
@@ -74,7 +74,7 @@ function App() {
       credits: 800,
       price: 24,
       verified: true,
-      image: 'https://drive.google.com/file/d/1l4O3vtuTeKC8TsCo_RnAJgydUQjL9TtN/view?usp=share_link'
+      image: 'https://globalwetlandsproject.org/wp-content/uploads/2020/05/green-trees-2666806.jpg'
     }
   ];
 
@@ -292,7 +292,7 @@ function App() {
       <div className="relative h-screen">
         <div className="absolute inset-0">
           <img
-            src="https://images.app.goo.gl/rzxh3eqN8MW2o9Ts5"
+            src="https://billionbricks.org/wp-content/uploads/2023/06/large_ww2122215_748616.jpg"
             alt="Coastal Community"
             className="w-full h-full object-cover"
           />
