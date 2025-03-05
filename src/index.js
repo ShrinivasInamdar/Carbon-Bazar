@@ -43,7 +43,7 @@ app.get("/api/signup", (req, res) => {
   res.render("signup");
 });
 
-// ✅ Fix: Login Route Logic
+// Login Route Logic
 app.post("/api/login", async (req, res) => {
   try {
     const check = await collection.findOne({ email: req.body.email });
