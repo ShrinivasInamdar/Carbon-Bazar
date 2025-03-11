@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
-import { Leaf, BarChart3, Clock, Globe2, ArrowUpRight, Wallet, User, LogOut, Shield, Users, Landmark, Waves } from 'lucide-react';
+import { 
+  Leaf, BarChart3, Clock, Globe2, ArrowUpRight, Wallet, User, LogOut, Shield, 
+  Users, Landmark, Waves, CheckCircle, XCircle, TrendingUp, LineChart,
+  PlusCircle, DollarSign, History, FileCheck, ShoppingCart, Store
+} from 'lucide-react';
 
 interface CarbonCredit {
   id: string;
@@ -12,32 +16,89 @@ interface CarbonCredit {
   image: string;
 }
 
+interface Transaction {
+  id: string;
+  type: 'purchase' | 'sale';
+  amount: number;
+  credits: number;
+  date: string;
+  status: 'completed' | 'pending';
+  projectName: string;
+}
+
 interface AuthUser {
   email: string;
   name: string;
   credits: number;
   transactions: number;
+  isVerified: boolean;
+  joinedDate: string;
+  role: 'buyer' | 'seller' | null;
+  carbonOffset: number;
+  totalPurchases: {
+    lifetime: number;
+    monthly: number;
+  };
+  totalSales: {
+    listed: number;
+    sold: number;
+    revenue: number;
+  };
 }
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState<AuthUser | null>(null);
+  const [user, setUser] = useState<AuthUser | null>({
+    email: "demo@carbonbazar.com",
+    name: "Demo User",
+    credits: 1500,
+    transactions: 12,
+    isVerified: true,
+    joinedDate: "2024-01-15",
+    role: null,
+    carbonOffset: 75.5,
+    totalPurchases: {
+      lifetime: 2500,
+      monthly: 300
+    },
+    totalSales: {
+      listed: 5000,
+      sold: 3500,
+      revenue: 87500
+    }
+  });
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    setUser({
-      email: "demo@carbonbazar.com",
-      name: "Demo User",
-      credits: 1500,
-      transactions: 12
-    });
-    setIsAuthenticated(true);
-  };
+  const [selectedRole, setSelectedRole] = useState<'buyer' | 'seller' | null>(null);
 
-  const handleLogout = () => {
-    setUser(null);
-    setIsAuthenticated(false);
-  };
+  const recentTransactions: Transaction[] = [
+    {
+      id: '1',
+      type: 'purchase',
+      amount: 2800,
+      credits: 100,
+      date: '2024-03-15',
+      status: 'completed',
+      projectName: 'Mangrove Forest Restoration'
+    },
+    {
+      id: '2',
+      type: 'sale',
+      amount: 3500,
+      credits: 125,
+      date: '2024-03-14',
+      status: 'completed',
+      projectName: 'Coastal Wetland Protection'
+    },
+    {
+      id: '3',
+      type: 'purchase',
+      amount: 1400,
+      credits: 50,
+      date: '2024-03-13',
+      status: 'pending',
+      projectName: 'Seagrass Conservation'
+    }
+  ];
 
   const carbonCredits: CarbonCredit[] = [
     {
@@ -78,11 +139,34 @@ function App() {
     }
   ];
 
-  const stats = [
-    { label: 'Total Credits Traded', value: '2.5M', icon: BarChart3 },
-    { label: 'Active Projects', value: '156', icon: Globe2 },
-    { label: 'Avg. Settlement Time', value: '48h', icon: Clock }
-  ];
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setUser({
+      email: "demo@carbonbazar.com",
+      name: "Demo User",
+      credits: 1500,
+      transactions: 12,
+      isVerified: true,
+      joinedDate: "2024-01-15",
+      role: null,
+      carbonOffset: 75.5,
+      totalPurchases: {
+        lifetime: 2500,
+        monthly: 300
+      },
+      totalSales: {
+        listed: 5000,
+        sold: 3500,
+        revenue: 87500
+      }
+    });
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    setIsAuthenticated(false);
+  };
 
   const Navigation = () => (
     <nav className="nav-blur fixed w-full z-50 border-b border-white/10">
@@ -91,17 +175,17 @@ function App() {
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
               <Leaf className="h-8 w-8 text-emerald-500" />
-              <span className="ml-2 text-xl font-bold text-gray-900 "id="bgcolor">Carbon Bazar</span>
+              <span className="ml-2 text-xl font-bold text-gray-900">Carbon Bazar</span>
             </Link>
           </div>
           <div className="flex items-center space-x-4">
             {isAuthenticated ? (
               <>
                 <Link to="/profile" className="flex items-center px-4 py-2 rounded-lg text-gray-700 hover:bg-white/20">
-                  <User className="h-5 w-5" id="bgcolor" />
-                  <span className="ml-2" id="bgcolor">{user?.name}</span>
+                  <User className="h-5 w-5" />
+                  <span className="ml-2">{user?.name}</span>
                 </Link>
-                <button id="bgcolor"
+                <button
                   onClick={handleLogout}
                   className="flex items-center px-4 py-2 rounded-lg text-gray-700 hover:bg-white/20"
                 >
@@ -172,51 +256,240 @@ function App() {
   const ProfilePage = () => {
     if (!user) return <Navigate to="/login" />;
 
+    const handleRoleSelect = (role: 'buyer' | 'seller') => {
+      setSelectedRole(role);
+      setUser(prev => prev ? { ...prev, role } : null);
+    };
+
+    const BuyerDashboard = () => (
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="glass-card p-6 rounded-xl">
+            <div className="flex items-center space-x-3 mb-4">
+              <ShoppingCart className="h-6 w-6 text-emerald-400" />
+              <h3 className="text-lg font-semibold text-white">Lifetime Purchases</h3>
+            </div>
+            <p className="text-3xl font-bold text-emerald-400">{user.totalPurchases.lifetime}</p>
+            <p className="text-sm text-gray-300">Total Credits</p>
+          </div>
+
+          <div className="glass-card p-6 rounded-xl">
+            <div className="flex items-center space-x-3 mb-4">
+              <TrendingUp className="h-6 w-6 text-blue-400" />
+              <h3 className="text-lg font-semibold text-white">Monthly Purchases</h3>
+            </div>
+            <p className="text-3xl font-bold text-blue-400">{user.totalPurchases.monthly}</p>
+            <p className="text-sm text-gray-300">Credits this month</p>
+          </div>
+
+          <div className="glass-card p-6 rounded-xl">
+            <div className="flex items-center space-x-3 mb-4">
+              <LineChart className="h-6 w-6 text-purple-400" />
+              <h3 className="text-lg font-semibold text-white">Carbon Offset</h3>
+            </div>
+            <p className="text-3xl font-bold text-purple-400">{user.carbonOffset}</p>
+            <p className="text-sm text-gray-300">Tons of CO₂</p>
+          </div>
+        </div>
+
+        <div className="glass-card p-6 rounded-xl">
+          <h3 className="text-xl font-semibold text-white mb-4">Carbon Offset Progress</h3>
+          <div className="w-full h-4 bg-gray-700 rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-gradient-to-r from-emerald-400 to-blue-400"
+              style={{ width: `${(user.carbonOffset / 100) * 100}%` }}
+            ></div>
+          </div>
+          <p className="text-sm text-gray-300 mt-2">Target: 100 Tons</p>
+        </div>
+      </div>
+    );
+
+    const SellerDashboard = () => (
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="glass-card p-6 rounded-xl">
+            <div className="flex items-center space-x-3 mb-4">
+              <Store className="h-6 w-6 text-emerald-400" />
+              <h3 className="text-lg font-semibold text-white">Credits Listed</h3>
+            </div>
+            <p className="text-3xl font-bold text-emerald-400">{user.totalSales.listed}</p>
+            <p className="text-sm text-gray-300">Available Credits</p>
+          </div>
+
+          <div className="glass-card p-6 rounded-xl">
+            <div className="flex items-center space-x-3 mb-4">
+              <DollarSign className="h-6 w-6 text-blue-400" />
+              <h3 className="text-lg font-semibold text-white">Revenue</h3>
+            </div>
+            <p className="text-3xl font-bold text-blue-400">${user.totalSales.revenue}</p>
+            <p className="text-sm text-gray-300">Total Earnings</p>
+          </div>
+
+          <div className="glass-card p-6 rounded-xl">
+            <div className="flex items-center space-x-3 mb-4">
+              <FileCheck className="h-6 w-6 text-purple-400" />
+              <h3 className="text-lg font-semibold text-white">Credits Sold</h3>
+            </div>
+            <p className="text-3xl font-bold text-purple-400">{user.totalSales.sold}</p>
+            <p className="text-sm text-gray-300">Total Sales</p>
+          </div>
+        </div>
+
+        <div className="glass-card p-6 rounded-xl">
+          <h3 className="text-xl font-semibold text-white mb-4">List New Credits</h3>
+          <form className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1">Project Name</label>
+              <input 
+                type="text" 
+                className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Enter project name"
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1">Credits Amount</label>
+                <input 
+                  type="number" 
+                  className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Number of credits"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1">Price per Credit</label>
+                <input 
+                  type="number" 
+                  className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Price in USD"
+                />
+              </div>
+            </div>
+            <button 
+              type="submit" 
+              className="w-full py-2 px-4 bg-gradient-to-r from-emerald-500 to-blue-500 text-white rounded-lg hover:from-emerald-600 hover:to-blue-600 transition-all transform hover:scale-105"
+            >
+              List Credits
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+
     return (
       <div className="pt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="glass-card rounded-2xl overflow-hidden">
           <div className="p-8">
-            <div className="flex items-center space-x-4">
-              <div className="bg-emerald-500/10 p-3 rounded-full">
-                <User className="h-8 w-8 text-emerald-500" />
+            {/* User Header */}
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center space-x-4">
+                <div className="bg-gradient-to-r from-emerald-500 to-blue-500 p-3 rounded-full">
+                  <User className="h-8 w-8 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-white">{user.name}</h2>
+                  <div className="flex items-center space-x-2">
+                    <p className="text-gray-300">{user.email}</p>
+                    {user.isVerified ? (
+                      <div className="flex items-center text-emerald-400">
+                        <CheckCircle className="h-4 w-4 mr-1" />
+                        <span className="text-sm">Verified</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center text-red-400">
+                        <XCircle className="h-4 w-4 mr-1" />
+                        <span className="text-sm">Unverified</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
-              <div>
-                <h2 className="text-2xl font-bold text-white">{user.name}</h2>
-                <p className="text-gray-300">{user.email}</p>
+              <div className="text-right">
+                <p className="text-sm text-gray-300">Member since</p>
+                <p className="text-lg font-semibold text-white">{user.joinedDate}</p>
               </div>
             </div>
 
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="glass-card p-6 rounded-xl">
-                <h3 className="text-lg font-semibold text-white">Carbon Credits</h3>
-                <p className="mt-2 text-3xl font-bold text-emerald-500">{user.credits}</p>
-                <p className="text-gray-300">Available credits</p>
-              </div>
+            {/* Role Selection */}
+            {!selectedRole ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <button
+                  onClick={() => handleRoleSelect('buyer')}
+                  className="glass-card p-6 rounded-xl hover:bg-white/20 transition-all cursor-pointer"
+                >
+                  <div className="flex items-center space-x-4">
+                    <div className="bg-emerald-500/10 p-3 rounded-full">
+                      <ShoppingCart className="h-8 w-8 text-emerald-500" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-white">Buyer Dashboard</h3>
+                      <p className="text-gray-300">Purchase and track carbon credits</p>
+                    </div>
+                  </div>
+                </button>
 
-              <div className="glass-card p-6 rounded-xl">
-                <h3 className="text-lg font-semibold text-white">Transactions</h3>
-                <p className="mt-2 text-3xl font-bold text-emerald-500">{user.transactions}</p>
-                <p className="text-gray-300">Completed trades</p>
+                <button
+                  onClick={() => handleRoleSelect('seller')}
+                  className="glass-card p-6 rounded-xl hover:bg-white/20 transition-all cursor-pointer"
+                >
+                  <div className="flex items-center space-x-4">
+                    <div className="bg-blue-500/10 p-3 rounded-full">
+                      <Store className="h-8 w-8 text-blue-500" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-white">Seller Dashboard</h3>
+                      <p className="text-gray-300">List and manage your carbon credits</p>
+                    </div>
+                  </div>
+                </button>
               </div>
-            </div>
+            ) : (
+              <div className="mb-8">
+                <button
+                  onClick={() => setSelectedRole(null)}
+                  className="text-sm text-gray-300 hover:text-white transition-colors"
+                >
+                  ← Back to role selection
+                </button>
+              </div>
+            )}
 
+            {/* Dashboard Content */}
+            {selectedRole === 'buyer' && <BuyerDashboard />}
+            {selectedRole === 'seller' && <SellerDashboard />}
+
+            {/* Transaction History */}
             <div className="mt-8">
-              <h3 className="text-lg font-semibold text-white mb-4">Recent Activity</h3>
+              <h3 className="text-xl font-semibold text-white mb-4">Recent Transactions</h3>
               <div className="space-y-4">
-                {[...Array(3)].map((_, i) => (
-                  <div key={i} className="glass-card flex items-center justify-between p-4 rounded-xl">
+                {recentTransactions.map((transaction) => (
+                  <div key={transaction.id} className="glass-card flex items-center justify-between p-4 rounded-xl">
                     <div className="flex items-center space-x-4">
-                      <div className="bg-emerald-500/10 p-2 rounded-full">
-                        <ArrowUpRight className="h-4 w-4 text-emerald-500" />
+                      <div className={`p-2 rounded-full ${
+                        transaction.type === 'purchase' 
+                          ? 'bg-emerald-500/10' 
+                          : 'bg-blue-500/10'
+                      }`}>
+                        {transaction.type === 'purchase' ? (
+                          <ShoppingCart className={`h-4 w-4 ${
+                            transaction.type === 'purchase' 
+                              ? 'text-emerald-500' 
+                              : 'text-blue-500'
+                          }`} />
+                        ) : (
+                          <Store className="h-4 w-4 text-blue-500" />
+                        )}
                       </div>
                       <div>
-                        <p className="font-medium text-white">Purchased Carbon Credits</p>
-                        <p className="text-sm text-gray-300">From Amazon Rainforest Conservation</p>
+                        <p className="font-medium text-white">
+                          {transaction.type === 'purchase' ? 'Purchased' : 'Sold'} {transaction.credits} Credits
+                        </p>
+                        <p className="text-sm text-gray-300">{transaction.projectName}</p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="font-medium text-emerald-500">+100 Credits</p>
-                      <p className="text-sm text-gray-300">2 days ago</p>
+                      <p className="font-medium text-emerald-400">${transaction.amount}</p>
+                      <p className="text-sm text-gray-300">{transaction.date}</p>
                     </div>
                   </div>
                 ))}
@@ -227,6 +500,13 @@ function App() {
       </div>
     );
   };
+
+
+  const stats = [
+    { label: 'Total Credits Traded', value: '2.5M', icon: BarChart3 },
+    { label: 'Active Projects', value: '156', icon: Globe2 },
+    { label: 'Avg. Settlement Time', value: '48h', icon: Clock }
+  ];
 
   const MarketplacePage = () => (
     <main className="pt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -419,4 +699,4 @@ function App() {
   );
 }
 
-export default App;
+export default App
