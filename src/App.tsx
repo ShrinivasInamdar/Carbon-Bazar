@@ -175,7 +175,7 @@ function App() {
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
               <Leaf className="h-8 w-8 text-emerald-500" />
-              <span className="ml-2 text-xl font-bold text-white-900">Carbon Bazar</span>
+              <span className="ml-2 text-xl font-bold text-white-900">Carbon Bazaar</span>
             </Link>
           </div>
           <div className="flex items-center space-x-4">
@@ -211,7 +211,7 @@ function App() {
       <div className="max-w-md w-full glass-card p-8 rounded-2xl space-y-8">
         <div className="text-center">
           <Leaf className="mx-auto h-12 w-12 text-emerald-500" />
-          <h2 className="mt-6 text-3xl font-extrabold text-white">Welcome to Carbon Bazar</h2>
+          <h2 className="mt-6 text-3xl font-extrabold text-white">Welcome to Carbon Bazaar</h2>
           <p className="mt-2 text-sm text-gray-300">Sign in to start trading carbon credits</p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleLogin}>
@@ -365,10 +365,13 @@ function App() {
                 />
               </div>
             </div>
-            <button href="/marketplace"
+            <button
+            
               type="submit" 
               className="w-full py-2 px-4 bg-gradient-to-r from-emerald-500 to-blue-500 text-white rounded-lg hover:from-emerald-600 hover:to-blue-600 transition-all transform hover:scale-105"
-            >
+            ><Link to="/marketplace">
+            <button>Go to Marketplace</button>
+          </Link>
               List Credits
             </button>
           </form>
