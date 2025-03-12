@@ -581,12 +581,12 @@ function App() {
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center">
           <div className="flex items-center mb-8 fade-in-up">
-            <div className="logo-shine bg-gradient-to-r from-emerald-500 to-blue-500 p-3 rounded-lg">
+            {/* <div className="logo-shine bg-gradient-to-r from-emerald-500 to-blue-500 p-3 rounded-lg">
               <Waves className="h-12 w-12 text-white" />
-            </div>
-            <span className="ml-4 text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-blue-400">
+            </div> */}
+            {/* <span className="ml-4 text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-blue-400">
               Carbon Bazar
-            </span>
+            </span> */}
           </div>
           
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight fade-in-up fade-in-up-delay-1">
