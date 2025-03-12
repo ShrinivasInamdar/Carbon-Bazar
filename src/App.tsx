@@ -175,19 +175,19 @@ function App() {
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
               <Leaf className="h-8 w-8 text-emerald-500" />
-              <span className="ml-2 text-xl font-bold text-gray-900">Carbon Bazar</span>
+              <span className="ml-2 text-xl font-bold text-white-900">Carbon Bazar</span>
             </Link>
           </div>
           <div className="flex items-center space-x-4">
             {isAuthenticated ? (
               <>
-                <Link to="/profile" className="flex items-center px-4 py-2 rounded-lg text-gray-700 hover:bg-white/20">
+                <Link to="/profile" className="flex items-center px-4 py-2 rounded-lg text-white-700 hover:bg-white/20">
                   <User className="h-5 w-5" />
                   <span className="ml-2">{user?.name}</span>
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="flex items-center px-4 py-2 rounded-lg text-gray-700 hover:bg-white/20"
+                  className="flex items-center px-4 py-2 rounded-lg text-white-700 hover:bg-white/20"
                 >
                   <LogOut className="h-5 w-5" />
                 </button>
