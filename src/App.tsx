@@ -365,7 +365,7 @@ function App() {
                 />
               </div>
             </div>
-            <button 
+            <button href="/marketplace"
               type="submit" 
               className="w-full py-2 px-4 bg-gradient-to-r from-emerald-500 to-blue-500 text-white rounded-lg hover:from-emerald-600 hover:to-blue-600 transition-all transform hover:scale-105"
             >
